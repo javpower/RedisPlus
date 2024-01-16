@@ -1,9 +1,6 @@
 package com.gc.easy.redis.util;
 
-import org.redisson.api.RBucket;
-import org.redisson.api.RMap;
-import org.redisson.api.RTopic;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -16,13 +13,26 @@ public class RedisUtil {
         this.redissonClient = redissonClient;
     }
 
-    /*
-        发布订阅的消息
+    /**
+     * 发布订阅的消息
+     * @param topic
+     * @param message
      */
     public void pushSubscriberMessage(String topic,String message) {
         RTopic rtopic = redissonClient.getTopic(topic);
         rtopic.publish(message);
     }
+
+    /**
+     * 发布消息队列
+     * @param topic
+     * @param message
+     */
+    public void pushQueueMessage(String topic,String message) {
+        RBlockingQueue<String> queue = redissonClient.getBlockingQueue(topic);
+        queue.offer(message);
+    }
+
     public <T> T get(String key, Class<T> clazz) {
         RBucket<T> bucket = redissonClient.getBucket(key);
         return bucket.get();

@@ -1,7 +1,9 @@
 package com.gc.easy.redis.subscribe;
 
+import com.gc.easy.redis.annotation.Queue;
 import com.gc.easy.redis.annotation.Subscribe;
 import io.micrometer.core.instrument.util.StringUtils;
+import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RTopic;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * @Subscribe 消息发布订阅模型
+ * @Quenue 消息队列模式
  *
  * @Component
  * public class TestSubscriber {
- *     @Subscribe(topic = "myTopic")
+ *     @Quenue(topic = "myTopic")
  *     public void handleMessage(String message) {
  *         // 处理接收到的消息
  *         System.out.println("Received message: " + message);
@@ -26,7 +28,7 @@ import java.lang.reflect.Method;
  * }
  */
 @Component
-public class SubscriberRegistrar implements ApplicationListener<ContextRefreshedEvent> {
+public class QueueRegistrar implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired(required = false)
     private RedissonClient redissonClient;
@@ -41,20 +43,21 @@ public class SubscriberRegistrar implements ApplicationListener<ContextRefreshed
             Object bean = context.getBean(beanName);
             Method[] methods = bean.getClass().getDeclaredMethods();
             for (Method method : methods) {
-                Subscribe annotation = method.getAnnotation(Subscribe.class);
+                Queue annotation = method.getAnnotation(Queue.class);
                 if (annotation != null) {
                     String topic = annotation.topic();
-                    // 注册订阅者
-                    RTopic rTopic = redissonClient.getTopic(topic);
-                    rTopic.addListener(String.class, (charSequence, msgStr) -> {
+                    RBlockingQueue<String> queue = redissonClient.getBlockingQueue(topic);
+                    new Thread(() -> {
                         try {
-                            if (StringUtils.isNotEmpty(msgStr)) {
-                                method.invoke(bean, msgStr);
+                            while (true) {
+                                String message = queue.take();
+                                // 处理消息的逻辑
+                                method.invoke(bean, message);
                             }
-                        } catch (IllegalAccessException | InvocationTargetException e) {
-                            e.printStackTrace();
+                        } catch (InterruptedException | IllegalAccessException | InvocationTargetException e) {
+                            Thread.currentThread().interrupt();
                         }
-                    });
+                    }).start();
                 }
             }
         }
