@@ -13,6 +13,16 @@ public class RedisUtil {
         this.redissonClient = redissonClient;
     }
 
+
+    public Long increment(String key) {
+        RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
+        return atomicLong.incrementAndGet();
+    }
+
+    public Long decrement(String key) {
+        RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
+        return atomicLong.decrementAndGet();
+    }
     /**
      * 发布订阅的消息
      * @param topic

@@ -51,10 +51,14 @@ public class QueueRegistrar implements ApplicationListener<ContextRefreshedEvent
                         try {
                             while (true) {
                                 String message = queue.take();
-                                // 处理消息的逻辑
-                                method.invoke(bean, message);
+                                try {
+                                    // 处理消息的逻辑
+                                    method.invoke(bean, message);
+                                } catch (IllegalAccessException | InvocationTargetException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        } catch (InterruptedException | IllegalAccessException | InvocationTargetException e) {
+                        } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
                         }
                     }).start();
