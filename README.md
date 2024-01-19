@@ -16,6 +16,6 @@
 <dependency>
     <groupId>io.github.javpower</groupId>
     <artifactId>easy-redis-spring-boot-starter</artifactId>
-    <version>3.9.1</version>
+    <version>3.9.1.1</version>
 </dependency>
 ```
