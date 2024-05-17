@@ -21,7 +21,7 @@
 ```xml
 <dependency>
     <groupId>io.github.javpower</groupId>
-    <artifactId>easy-redis-spring-boot-starter</artifactId>
+    <artifactId>redis-plus-boot-starter</artifactId>
     <version>3.9.1.1</version>
 </dependency>
 ```

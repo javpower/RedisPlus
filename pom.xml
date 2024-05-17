@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.javpower</groupId>
-    <artifactId>easy-redis-spring-boot-starter</artifactId>
+    <artifactId>redis-plus-boot-starter</artifactId>
     <version>3.9.1.1</version>
-    <name>easy-redis</name>
+    <name>redis-plus</name>
     <description>a tool about easy redis</description>
-    <url>https://github.com/javpower/easy-redis</url>
+    <url>https://github.com/javpower/RedisPlus</url>
     <licenses>
         <license>
             <name> The Apache Software License, Version 2.0 </name>
@@ -16,9 +16,9 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/javpower/easy-redis</url>
-        <connection>scm:git@github.com/javpower/easy-redis.git</connection>
-        <developerConnection>scm:git@github.com/javpower/easy-redis.git</developerConnection>
+        <url>https://github.com/javpower/RedisPlus</url>
+        <connection>scm:git@github.com/javpower/RedisPlus.git</connection>
+        <developerConnection>scm:git@github.com/javpower/RedisPlus.git</developerConnection>
     </scm>
     <developers>
         <developer>
