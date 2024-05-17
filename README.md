@@ -1,7 +1,7 @@
 
-# 📚 easy-redis: 高级Redisson客户端封装
+# 📚 RedisPlus: 高级Redisson客户端封装
 
-`easy-redis` 是一个基于 `Redisson` 的高级Java工具库，它通过注解的方式简化了分布式锁、消息队列、发布订阅等Redis特性的使用。该库旨在提供声明式、高度可配置的Redis操作，以适应各种复杂的业务场景。
+`RedisPlus` 是一个基于 `Redisson` 的高级Java工具库，它通过注解的方式简化了分布式锁、消息队列、发布订阅等Redis特性的使用。该库旨在提供声明式、高度可配置的Redis操作，以适应各种复杂的业务场景。
 
 ## 🌈 特性概览
 
